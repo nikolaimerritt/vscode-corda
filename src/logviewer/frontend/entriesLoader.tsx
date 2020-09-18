@@ -3,6 +3,7 @@ import { InfiniteLoader, List, IndexRange, ListRowProps, AutoSizer } from "react
 import { LogEntry } from "./types";
 import * as util from "./util";
 import * as request from "./request";
+import  { TableContainer, Table, TableBody, TableRow, TableCell } from "@material-ui/core";
 import { Entry, LoadingEntry } from "./entry";
 
 export interface entriesLoaderProps {
@@ -59,3 +60,8 @@ export const EntriesLoader = (props: entriesLoaderProps) => {
         </InfiniteLoader>
     )
 }
+
+/*
+
+
+*/

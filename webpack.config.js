@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const webpack = require("webpack"); 
 
 module.exports = {
     entry: "./src/logviewer/frontend/index.tsx",
@@ -10,6 +11,11 @@ module.exports = {
         libraryTarget: 'umd',
       devtoolModuleFilenameTemplate: '../[resource-path]'
     },
+    plugins: [
+      new webpack.SourceMapDevToolPlugin({
+        exclude: ['popper.js']
+      })
+    ],
     node: {
       fs: "empty"
     },

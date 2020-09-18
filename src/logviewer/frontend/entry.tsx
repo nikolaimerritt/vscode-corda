@@ -1,22 +1,74 @@
 import * as React from 'react';
 import { LogEntry, LogSeverities } from './types';
-import Collapse from "react-bootstrap/Collapse";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@material-ui/core";
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as util from "./util";
 
-export const Entry = (props: {entry: LogEntry, key: any}) => 
-    expandableObject(props.entry.severity.toString(), props.entry)
+export const Entry = (props: {entry: LogEntry, key: any}) => {
+    const [open, setOpen] = React.useState(false);
+    const innerDivId = `key: ${props.key}`;
+
+    return (
+        <React.Fragment>
+            <TableRow 
+                key={props.key} 
+                onClick={() => setOpen(!open)} 
+                className={open ? "open" : undefined}
+            >
+                <TableCell style={{width: 40}}>
+                    {open ? <ExpandLessIcon></ExpandLessIcon> : <ExpandMoreIcon></ExpandMoreIcon>}
+                </TableCell>
+                <TableCell>
+                    {props.entry.severity}
+                </TableCell>
+                <TableCell>
+                    {format(props.entry.date)}
+                </TableCell>
+                <TableCell>
+                    {props.entry.thread}
+                </TableCell>
+                <TableCell>
+                    {props.entry.source}
+                </TableCell>
+            </TableRow>
+            {open ? 
+                <>
+                    <TableRow>
+                        <TableCell>
+                            {props.entry.body.message}
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>
+                            {format(props.entry.body.object)}
+                        </TableCell>
+                    </TableRow>
+
+                </> : ""
+            }
+        </React.Fragment>
+    ) 
+}
         
 
 export const LoadingEntry = (props: {key: any}) =>
     <div key={props.key}>
         . . . . . . . . . .
     </div>
-
-
+/*
+export const Header = () => 
+    <TableHead>
+        <TableRow>
+            <TableCell style={{width: 40}}></TableCell>
+            <TableCell> Severity </TableCell>
+            <TableCell> Date </TableCell>
+            <TableCell> Thread </TableCell>
+            <TableCell> Source </TableCell>
+        </TableRow>
+    </TableHead>
+*/
+/*
 const expandableObject = (header: any, object: any) => {
     const keys = Object.keys(object);
     if (keys.length === 0 || typeof object !== "object" || object instanceof Date) {
@@ -38,25 +90,7 @@ const expandableObject = (header: any, object: any) => {
 
     
 const Expandable = ({header, elements, key}) => {
-    const [open, setOpen] = React.useState(false);
-    const innerDivId = `key: ${key}`;
-    return (
-        <>
-            <Button
-                onClick={() => setOpen(!open)}
-                aria-controls={innerDivId}
-                aria-expanded={open}
-            >
-                {format(header)}
-            </Button>
-            <Collapse in={open}>
-                <div id={innerDivId}>
-                    {elements}
-                </div>
-            </Collapse>
-            <br />
-        </>
-    )
+    
 }
 
 
@@ -73,7 +107,7 @@ const KeyValueRow = ({header, object}) => {
 
     )
 }
-    
+*/
 const format = (object: any) => {
     if (isEmptyObject(object))
         return "(empty)"

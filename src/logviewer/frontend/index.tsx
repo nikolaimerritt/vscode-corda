@@ -2,9 +2,9 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { WindowMessage, MessageType, LogEntry } from './types';
 import { EntriesDisplay } from "./entriesDisplay";
+import  { TableContainer, Table, TableBody, TableRow, TableCell } from "@material-ui/core";
 import { EntriesLoader } from './entriesLoader';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "./styles.css";
+import "./transactionStyle.css"
 
 window.addEventListener("message", event => {
     const message = event.data as WindowMessage;
